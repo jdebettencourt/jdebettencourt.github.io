@@ -17,6 +17,11 @@
  */
 'use strict';
 
+
+// added for creating forecast cards
+const API_KEY = "01cfa1f338cb65fa0a5db70d91a78524";
+const BASE_URL = "https://api.darksky.net/forecast";
+
 const weatherApp = {
   selectedLocations: {},
   addDialogContainer: document.getElementById('addDialogContainer'),
@@ -146,7 +151,8 @@ function renderForecast(card, data) {
  * @return {Object} The weather forecast, if the request fails, return null.
  */
 function getForecastFromNetwork(coords) {
-  return fetch(`/forecast/${coords}`)
+//  return fetch(`/forecast/${coords}`)
+    return fetch(`${BASE_URL}/${API_KEY}/${coords}`)
       .then((response) => {
         return response.json();
       })
