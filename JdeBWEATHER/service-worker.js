@@ -117,7 +117,7 @@ if (evt.request.url.includes('/forecast/')) {
   console.log('[Service Worker] Fetch (data)', evt.request.url);
   evt.respondWith(
       caches.open(DATA_CACHE_NAME).then((cache) => {
-        return fetch(evt.request)
+        return fetch(evt.request, {mode:'no-cors'})
             .then((response) => {
               // If the response was good, clone it and store it in the cache.
               if (response.status === 200) {
