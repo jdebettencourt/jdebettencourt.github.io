@@ -13,18 +13,9 @@
 <link rel="stylesheet" href="leaflet.css" />
 <script src="leaflet.js"></script>
 
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		#map {
-			width: 1000px;
-			height: 700px;
-		}
-	</style>
-
-<style>#map { width: 1000px; height: 700px; }
+<style>
+html, body { height: 100%; margin: 12px; }
+#map { width: 1000px; height: 700px; }
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
 .legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 80px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
 
@@ -38,7 +29,10 @@
 
 <script type="text/javascript">
 
-	var map = L.map('map').setView([37.17, -119.45], 6);
+	var map = L.map('map',{
+	    zoomControl: false,
+	    doubleClickZoom: false
+	}).setView([37.17, -119.45], 6);
 
 	var geojson = L.geoJson(cacountiesData).addTo(map);
 
@@ -69,7 +63,7 @@ function getColor(d) {
            d > 800  ? '#BD0026' :
            d > 600  ? '#E31A1C' :
            d > 400  ? '#FC4E2A' :
-           d > 200   ? '#FD8D3C' :
+           d > 200  ? '#FD8D3C' :
            d > 100  ? '#FEB24C' :
            d > 50   ? '#FED976' :
                       '#FFEDA0';
@@ -121,7 +115,8 @@ L.geoJson(cacountiesData, {style: style}).addTo(map);
 		layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: zoomToFeature
+			click: resetHighlight,
+			dblclick: highlightFeature
 		});
 	}
 
