@@ -8,26 +8,17 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+<link rel="stylesheet" href="leaflet.css" />
+<script src="leaflet.js"></script>
 
-
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		#map {
-			width: 1000px;
-			height: 800px;
-		}
-	</style>
-
-<style>#map { width: 1000px; height: 800px; }
+<style>
+html, body { height: 100%; margin: 12px; }
+#map { width: 1000px; height: 700px; }
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
-.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 80px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 80px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+</style>
 
 	
 </head>
@@ -39,7 +30,10 @@
 
 <script type="text/javascript">
 
-	var map = L.map('map').setView([37.17, -119.45], 6);
+	var map = L.map('map',{
+	    zoomControl: false,
+	    doubleClickZoom: false
+	}).setView([37.17, -119.45], 6);
 
 	var geojson = L.geoJson(cacountiesData).addTo(map);
 
@@ -56,7 +50,8 @@
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>California County Total Winter Events</h4>' +  (props ?
 			'<b>' + props.NAMELSAD10 + '</b><br />' + props.Winter + ' Weighted Winter Events'
-			: 'Hover over a CA County');
+			: 'Hover over a CA County - if mouse enabled' + '</b><br />' +
+			'doubleClick on a CA County - if touch enabled');
 	};
 
 	info.addTo(map);
@@ -122,7 +117,8 @@ L.geoJson(cacountiesData, {style: style}).addTo(map);
 		layer.on({
 			mouseover: highlightFeature,
 			mouseout: resetHighlight,
-			click: zoomToFeature
+			click: resetHighlight,
+			dblclick: highlightFeature
 		});
 	}
 
@@ -161,6 +157,6 @@ L.geoJson(cacountiesData, {style: style}).addTo(map);
 
 
 </script>
-
+<p>March 2020 <a href="mailto:james.s.debettencourt@gmail.com">james.s.debettencourt@gmail.com</a></p> 
 </body>
 </html>
